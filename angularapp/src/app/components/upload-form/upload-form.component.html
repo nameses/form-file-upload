@@ -1,0 +1,103 @@
+<div class="sm:p-6 space-y-4 md:space-y-6">
+  <h1
+    class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center"
+  >
+    {{ title }}
+  </h1>
+  <!-- <div
+    class="flex items-center border-l-4 border-blue-500 bg-blue-300 text-sm font-bold px-4 py-3"
+    role="alert"
+  ></div> -->
+  <form
+    class="space-y-4 md:space-y-6 sm:px-12"
+    [formGroup]="form"
+    action="post"
+    (ngSubmit)="onSubmit()"
+  >
+    <div>
+      <!-- username block -->
+      <div class="mt-2">
+        <label
+          for="username"
+          class="block mb-1 text-sm font-medium text-gray-900"
+          >Your username</label
+        >
+        <input
+          type="username"
+          id="username"
+          formControlName="username"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="username"
+          [ngClass]="{
+            'is-invalid': username.invalid && username.touched
+          }"
+        />
+        <div
+          *ngIf="username.touched && username.errors"
+          class="text-sm text-red-600"
+        >
+          <div *ngIf="username.errors['required']">Username required</div>
+        </div>
+      </div>
+
+      <!-- email block -->
+      <div class="mt-2">
+        <label for="email" class="block mb-1 text-sm font-medium text-gray-900"
+          >Your email</label
+        >
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="email@gmail.com"
+          [ngClass]="{
+            'is-invalid': email.invalid && email.touched
+          }"
+        />
+        <div *ngIf="email.touched && email.errors" class="text-sm text-red-600">
+          <div *ngIf="email.errors['required']">Email is required</div>
+          <div *ngIf="email.errors['pattern']">Write valid email, please</div>
+        </div>
+      </div>
+
+      <!-- file upload block -->
+      <div class="mt-2">
+        <label class="block mb-1 text-sm font-medium text-gray-900" for="file"
+          >Upload file</label
+        >
+        <input
+          class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+          id="file"
+          type="file"
+          formControlName="file"
+          accept=".docx"
+          (change)="onFileSelected($event)"
+          [ngClass]="{
+            'is-invalid': file.touched && file.invalid
+          }"
+        />
+        <div *ngIf="!file.touched" class="mt-2 text-sm text-gray-500">
+          Add your .docx document
+        </div>
+        <div *ngIf="file.touched && file.errors" class="text-sm text-red-600">
+          <div *ngIf="file.errors['required']">File is required</div>
+          <div *ngIf="file.errors['fileTypeInvalid']">File type is invalid</div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-row justify-end">
+      <button
+        type="submit"
+        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+        [disabled]="form.invalid || !form.touched || success"
+      >
+        Submit
+      </button>
+    </div>
+    <div *ngIf="success" class="text-green-500 font-medium">
+      File was successfully uploaded. If you want to upload new file, reload
+      this form.
+    </div>
+  </form>
+</div>
