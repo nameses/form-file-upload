@@ -21,26 +21,43 @@ namespace webapi.Services
         {
             var generatedBlobName = GenerateBlobName();
 
-            var container = new BlobContainerClient(_config.Value.ConnectionString, _config.Value.ContainerName);
+            var confs = _config.Value;
+
+            var container = new BlobContainerClient(confs.ConnectionString, confs.ContainerName);
             var blob = container.GetBlobClient(generatedBlobName);
             var filename = fileUploadDTO.File?.FileName!;
 
             if (fileUploadDTO.File != null)
             {
-                using (Stream stream = fileUploadDTO.File.OpenReadStream())
+                try
                 {
-                    await blob.UploadAsync(stream, true);
+                    using (Stream stream = fileUploadDTO.File.OpenReadStream())
+                    {
+                        if (stream.Length == 0)
+                        {
+                            _logger.LogInformation("Empty file detected. It will not be uploaded.");
+                            throw new Exception("Empty file.");
+                        }
+
+                        stream.Position = 0;
+
+                        await blob.UploadAsync(stream, true);
+                    }
+
+                    var filename_encoded = HttpUtility.UrlEncode(filename);
+
+                    await blob.SetMetadataAsync(new Dictionary<string, string>
+                    {
+                        { "email", fileUploadDTO.Email! },
+                        { "username", fileUploadDTO.Username! },
+                        { "filename", filename_encoded }
+                    });
                 }
-
-                var filename_encoded = HttpUtility.UrlEncode(filename);
-
-                await blob.SetMetadataAsync(new Dictionary<string, string>
+                catch (Exception e)
                 {
-                    { "email", fileUploadDTO.Email! },
-                    { "username", fileUploadDTO.Username! },
-                    { "filename", filename_encoded }
-                });
-
+                    _logger.LogError("Exception during file uploading/setting metadata");
+                    throw new Exception("File uploading exception", e);
+                }
             }
             else
                 throw new NullReferenceException(nameof(fileUploadDTO.File));

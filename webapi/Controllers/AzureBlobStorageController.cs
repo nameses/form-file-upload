@@ -37,8 +37,17 @@ namespace azure_form_file_upload.Controllers
                 File = f
             };
 
-            if (fileDTO.File == null || fileDTO.File.Length == 0)
+            if (fileDTO.File == null || fileDTO.File.Length == 0 || fileDTO.File.FileName == null)
                 ModelState.AddModelError("File", "Invalid file");
+            else
+            {
+                var fileExtension = Path.GetExtension(fileDTO.File.FileName).ToLowerInvariant();
+
+                if (fileExtension!=".docx")
+                {
+                    ModelState.AddModelError("File", "Invalid file extension");
+                }
+            }
 
             if (string.IsNullOrEmpty(fileDTO.Username))
                 ModelState.AddModelError("Username", "Username is required");
