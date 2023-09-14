@@ -1,3 +1,4 @@
 .vs/
 WebApiTest/bin
 WebApiTest/obj
+WebApiTest/appsettings.json
