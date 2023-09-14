@@ -51,7 +51,6 @@ export class UploadFormComponent {
 
   onFileSelected(event: any) {
     this.uploadedFile = <File>event.target.files[0];
-    console.log(this.uploadedFile);
   }
 
   onSubmit(): void {
@@ -65,8 +64,6 @@ export class UploadFormComponent {
       formData.append('username', this.username.value);
       formData.append('email', this.email.value);
       formData.append('file', this.uploadedFile, this.uploadedFile.name);
-
-      console.log(this.uploadedFile);
 
       this.http.post(env.baseApiUrl + '/azure/fileupload', formData).subscribe({
         next: (response) => {
