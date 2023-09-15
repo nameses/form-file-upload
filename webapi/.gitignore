@@ -8,7 +8,7 @@ ClientApp/node_modules
 ClientApp/.editorconfig
 Settings/appsecrets.json
 Properties/ServiceDependencies/
-
+Settings/emailSettings.json
 # User-specific files
 *.suo
 *.user
