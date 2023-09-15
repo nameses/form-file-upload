@@ -20,7 +20,6 @@ namespace azure_form_file_upload.Controllers
 
         [HttpPost, DisableRequestSizeLimit]
         [Route("fileupload")]
-        //public async Task<IActionResult> Upload([FromBody] FileUploadDTO fileDTO)
         public async Task<IActionResult> Upload()
         {
             var formCollection = await Request.ReadFormAsync();

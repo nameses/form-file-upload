@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DotNetEnv" Version="2.5.0" />
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="Moq" Version="4.20.69" />
@@ -26,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BlobTrigger\BlobTrigger.csproj" />
+    <ProjectReference Include="..\AzureBlobTrigger\AzureBlobTrigger.csproj" />
     <ProjectReference Include="..\webapi\webapi.csproj" />
   </ItemGroup>
 

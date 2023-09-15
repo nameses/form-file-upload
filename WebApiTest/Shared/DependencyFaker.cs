@@ -16,7 +16,7 @@ namespace WebApiTest.Shared
         public static FileUploadService CreateFileUploadService()
         {
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile("./Settings/appsecrets.json") // Provide the path to your configuration file
+                .AddJsonFile("./Settings/appsecrets.json")
                 .Build();
 
             var azureBlobStorageConfig = configuration.GetSection("Azure").GetSection("TestBlobStorage").Get<AzureBlobStorageConfig>()!;

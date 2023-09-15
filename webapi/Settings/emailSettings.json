@@ -1,0 +1,9 @@
+{
+  "Email": {
+    "EmailHost": "smtp.gmail.com",
+    "EmailPort": "587",
+    "EmailUsername": "maksiem.tp@gmail.com",
+    "EmailPassword": "mfuooqpgxkppipbk",
+    "EmailFrom": "maksiem.tp@gmail.com"
+  }
+}
